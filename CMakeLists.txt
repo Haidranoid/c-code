@@ -3,4 +3,8 @@ project(c_course C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(c_course main.c code/input_output.c code/printing_formats.c code/enums.c code/program_arguments.c code/challenge_rectangle.c code/challenge_enums.c code/bitwise_operators.c code/challenge_guest_the_number.c code/challenge_prime_numbers.c code/strings_manipulation.c code/challenge_char_arrays.c code/pointers.c code/challenge_pointers_1.c code/dynamic_memory_allocation.c code/challenge_allocating_memory.c code/challenge_structs.c code/files.c code/challenge_files.c)
+# ============= C Programming For Beginners - Master the C Language =========
+#add_executable(c_course main.c master-the-c-languaje/code/input_output.c master-the-c-languaje/code/printing_formats.c master-the-c-languaje/code/enums.c master-the-c-languaje/code/program_arguments.c master-the-c-languaje/code/challenge_rectangle.c master-the-c-languaje/code/challenge_enums.c master-the-c-languaje/code/bitwise_operators.c master-the-c-languaje/code/challenge_guest_the_number.c master-the-c-languaje/code/challenge_prime_numbers.c master-the-c-languaje/code/strings_manipulation.c master-the-c-languaje/code/challenge_char_arrays.c master-the-c-languaje/code/pointers.c master-the-c-languaje/code/challenge_pointers_1.c master-the-c-languaje/code/dynamic_memory_allocation.c master-the-c-languaje/code/challenge_allocating_memory.c master-the-c-languaje/code/challenge_structs.c master-the-c-languaje/code/files.c master-the-c-languaje/code/challenge_files.c)
+
+# ============= Advanced C Programming Course ===================
+add_executable(c_course main.c)
