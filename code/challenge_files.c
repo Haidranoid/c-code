@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int main(int argc, char *argv[]) {
+int challenge_files(int argc, char *argv[]) {
     FILE *fp;
     fpos_t pos;
     fp = fopen("../file.txt", "r");
