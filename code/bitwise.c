@@ -18,7 +18,7 @@ int bitwise(int argc, char *argv[]) {
     c = a ^ b;       /* 49 = 0011 0001 */
     printf("Line 3 - Value of c is %d\n", c );
 
-    c = ~a;          /*-61 = 1100 0011 */
+    c = ~a;          /* flip the bits - 1100 0011 */
     printf("Line 4 - Value of c is %d\n", c );
 
     c = a << 2;     /* 240 = 1111 0000 */
