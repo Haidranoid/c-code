@@ -1,0 +1,47 @@
+- Compile manually -----------------------------------
+terminal$ gcc main.c      -> a.exe / a.out
+
+- Compile with custom output filename ----------------
+terminal$ gcc main.c -o main
+
+- Compile with custom output filename with warnings --
+terminal$ gcc -Wall main.c -o main
+
+- Generate assembly code -----------------------------
+terminal$ gcc -S main.c
+
+- Compile file object without linker -----------------
+
+1.- generate object file
+terminal$ gcc -c main.c   -> main.o
+
+2.- link the libraries
+terminal$ gcc -o main.exe main.o
+
+- Link to external shared libraries ------------------
+
+link with <math.h>
+terminal$ gcc -Wall main.exe -o main -l m
+
+- Generate shared library ----------------------------
+
+terminal$ gcc -c -Wall -fPIC main.c
+terminal$ gcc -shared main.o -o main.so
+
+- Generate debugger information ----------------------
+terminal$ gcc -g main.c
+
+print debugger information
+terminal$ gcc -v main.c
+
+- Verify if in ansi standard -------------------------
+terminal$ gcc -Wall -ansi main.c
+
+- Define macro in compile time -----------------------
+terminal$ gcc -DMY_MACRO=5 main.c
+
+- Displays the shared libraries needed ---------------
+terminal$ ldd a.out
+
+
+
