@@ -18,14 +18,21 @@ terminal$ gcc -c main.c   -> main.o
 2.- link the libraries
 terminal$ gcc -o main.exe main.o
 
-- Link to external shared libraries ------------------
+- Link to external static/shared libraries ------------------
 
 link with <math.h>
 terminal$ gcc -Wall main.exe -o main -l m
 
+
+- Generate static library ----------------------------
+
+terminal$ gcc -c main.c -o libmain.o
+terminal$ ar rcs libmain.a libmain.o
+
+
 - Generate shared library ----------------------------
 
-terminal$ gcc -c -Wall -fPIC main.c
+terminal$ gcc -c -Wall -fPIC main.c  -> main.o
 terminal$ gcc -shared main.o -o main.so
 
 - Generate debugger information ----------------------
@@ -44,4 +51,21 @@ terminal$ gcc -DMY_MACRO=5 main.c
 terminal$ ldd a.out
 
 
+Use the following flags for linking
+-static -static-libgcc -static-libstdc++
+
+
+Check if it actually worked
+Make sure that there is really no dynamic linkage
+
+ldd yourexecutable
+should return "not a dynamic executable" or something equivalent.
+
+Make sure that there are no unresolved symbols left
+
+nm yourexecutable | grep " U "
+The list should be empty or should contain only some special kernel-space symbols like
+
+U __tls_get_addr
+Finally, check if you can actually execute your executable
 

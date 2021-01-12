@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../headers/bitwise.h"
+#include "../lib/bitwise.h"
 
 
 int pack_data_bitmasks(int argc, char *argv[]) {

@@ -1,6 +1,5 @@
 #include "bitwise.h"
-
-char *convertDecimalToBinary32(uint32_t n, uint8_t divider) {
+ void convertDecimalToBinary32(uint32_t n, uint8_t divider) {
     char *binaryNumber = (char *) calloc(33, sizeof(char));
 
     binaryNumber[32] = '\0';
@@ -21,6 +20,4 @@ char *convertDecimalToBinary32(uint32_t n, uint8_t divider) {
 
     free(binaryNumber);
     binaryNumber = NULL;
-
-    return binaryNumber;
 }

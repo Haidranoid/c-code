@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *convertDecimalToBinary32(uint32_t n, uint8_t divider);
+void convertDecimalToBinary32(uint32_t n, uint8_t divider);
 
 #endif //C_COURSE_BITWISE_H
