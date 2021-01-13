@@ -1,39 +1,46 @@
-- Compile manually -----------------------------------
-terminal$ gcc main.c      -> a.exe / a.out
+- Compile manually ----------------------------------- [DYNAMIC LINKING]
+terminal$ gcc main.c      -> a.out / a.exe
 
-- Compile with custom output filename ----------------
-terminal$ gcc main.c -o main
+- Compile with custom output filename ---------------- [DYNAMIC LINKING]
+terminal$ gcc -o main main.c
 
-- Compile with custom output filename with warnings --
-terminal$ gcc -Wall main.c -o main
+- Compile with custom output filename with warnings -- [DYNAMIC LINKING]
+terminal$ gcc -Wall -o main main.c
 
-- Generate assembly code -----------------------------
-terminal$ gcc -S main.c
+- Compile file in steps ------------------------------ [NO LINKED]
 
-- Compile file object without linker -----------------
-
-1.- generate object file
-terminal$ gcc -c main.c   -> main.o
+1.- generate object file                               [STOP LINKER PROCESS]
+terminal$ gcc -Wall -c main.c   ->  main.o
 
 2.- link the libraries
-terminal$ gcc -o main.exe main.o
+terminal$ gcc -Wall -o main main.o -dy                 [DYNAMIC LINKING]
+terminal$ gcc -Wall -o main main.o -static             [STATIC LINKING] (not working,try in c++)
 
-- Link to external static/shared libraries ------------------
+- Compile file in steps ------------------------------ [STATIC LINKING]
+terminal$ gcc -Wall -o main main.c -static                              (not working,try in c++)
+
+- Displays the shared libraries needed ---------------
+terminal$ ldd a.out
+terminal$ otool -L a.out
+
+
+- Generate static library ---------------------------- [STATIC LIBRARY]
+
+terminal$ gcc -c libmain.c -o libmain.o
+terminal$ ar rcs libmain.a libmain.o ... ...
+
+- Generate shared library ---------------------------- [SHARED LIBRARY]
+
+terminal$ gcc -c -Wall -fPIC util_file.c  -> util_file.o
+terminal$ gcc -shared -o main.so main.o
+
+
+- Link to external static/shared libraries -----------
+link with <math.h>
+terminal$ gcc -Wall main.c -o main -l m
 
 link with <math.h>
-terminal$ gcc -Wall main.exe -o main -l m
-
-
-- Generate static library ----------------------------
-
-terminal$ gcc -c main.c -o libmain.o
-terminal$ ar rcs libmain.a libmain.o
-
-
-- Generate shared library ----------------------------
-
-terminal$ gcc -c -Wall -fPIC main.c  -> main.o
-terminal$ gcc -shared main.o -o main.so
+terminal$ gcc main.c -l m
 
 - Generate debugger information ----------------------
 terminal$ gcc -g main.c
@@ -47,13 +54,10 @@ terminal$ gcc -Wall -ansi main.c
 - Define macro in compile time -----------------------
 terminal$ gcc -DMY_MACRO=5 main.c
 
-- Displays the shared libraries needed ---------------
-terminal$ ldd a.out
 
 
 Use the following flags for linking
 -static -static-libgcc -static-libstdc++
-
 
 Check if it actually worked
 Make sure that there is really no dynamic linkage
@@ -63,7 +67,7 @@ should return "not a dynamic executable" or something equivalent.
 
 Make sure that there are no unresolved symbols left
 
-nm yourexecutable | grep " U "
+nm yourexecutable
 The list should be empty or should contain only some special kernel-space symbols like
 
 U __tls_get_addr
