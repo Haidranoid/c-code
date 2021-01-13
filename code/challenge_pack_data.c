@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../lib/bitwise.h"
+#include "bitwise.h"
 
 #define MASK_32_BITS 0xffffffff
 
