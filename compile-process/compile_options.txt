@@ -26,17 +26,21 @@ terminal$ otool -L a.out
 
 - Generate static library ---------------------------- [STATIC LIBRARY]
 
-terminal$ gcc -c libmain.c
-terminal$ ar rcs libmain.a libmain.o ... ...
+terminal$ gcc -c main.c
+terminal$ ar rcs libmain.a main.o ... ...
 
 list the files obj.o in the library
 terminal$ ar -t libtmain.a
 
 - Generate shared library ---------------------------- [SHARED LIBRARY]
 
-terminal$ gcc -c -Wall -fPIC util_file.c
-terminal$ gcc -shared -o main.so main.o
+terminal$ gcc -c -Wall -fPIC main.c
+terminal$ gcc -shared -o libmain.so main.o
 
+- Compile with Include Headers from specify directory and link -----------
+
+terminal$ gcc -I /path/to/header -c main.c -o main.o
+terminal$ gcc -o main main.o -L /path/to/library -l library.so
 
 - Link to external static/shared libraries -----------
 link with <math.h>
