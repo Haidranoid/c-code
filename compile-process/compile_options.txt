@@ -49,6 +49,9 @@ terminal$ gcc -Wall main.c -o main -l m
 link with <math.h>
 terminal$ gcc main.c -l m
 
+- Link to dynamic loading -----------
+terminal$ gcc -o main.exe main.c -ldl
+
 - Generate debugger information ----------------------
 terminal$ gcc -g main.c
 
