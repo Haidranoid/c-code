@@ -21,7 +21,8 @@ int challenge_dynamic_loading() {
     void (*copy_strings)(char *, char *) = NULL;
     char *(*substring)(const char *, int, int) = NULL;
 
-    handle = dlopen("/Users/administaff/Desktop/Projects/c-code/cmake-build-debug/libstring-functions-shared.dylib",RTLD_LAZY); // Mac
+//    handle = dlopen("/Users/administaff/Desktop/Projects/c-code/cmake-build-debug/libstring-functions-shared.dylib",RTLD_LAZY); // Mac
+    handle = dlopen("/Users/eduardo/Desktop/c-code/cmake-build-debug/libstring-functions-shared.dylib",RTLD_LAZY); // Mac
 
     if (!handle) {
         fputs(dlerror(), stderr);
