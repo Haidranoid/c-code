@@ -21,7 +21,7 @@ add_executable(c_course main.c code/memset.c code/bitwise.c code/bitmasks.c code
         code/va_functions.c code/recursion.c code/advance_control_flow.c code/io.c code/unions.c code/preprocessor.c
         code/macros.c code/predefined_macros.c code/macro_debug.c code/profiling.c code/double_pointers.c
         code/functions_pointers.c code/challenge_functions_pointers.c code/void_pointers.c code/challenge_static_libraries.c
-        code/dynamic_loading.c code/challenge_dynamic_libraries.c code/challenge_dynamic_loading.c code/assert.c code/abort_operations.c code/data_structures.c code/stdlib_functions.c code/challenge_stdlib.c code/signals.c)
+        code/dynamic_loading.c code/challenge_dynamic_libraries.c code/challenge_dynamic_loading.c code/assert.c code/abort_operations.c code/data_structures.c code/stdlib_functions.c code/challenge_stdlib.c code/signals.c code/thread.c code/sockets.c)
 
 #target_link_libraries(c_course PUBLIC "-static")
 target_include_directories(c_course PUBLIC ${CMAKE_SOURCE_DIR}/libraries/bitwise) # used to add to search directory to include file.h

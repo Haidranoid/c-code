@@ -125,7 +125,7 @@ int socket_send(int h_socket, char *request, int len_request) {
     return shortRetVal;
 }
 
-int main() {
+int sockets() {
     int h_socket = 0,read_size= 0;
     struct sockaddr_in server;
     char send_to_server[100] = {0};
