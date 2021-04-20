@@ -1,0 +1,74 @@
+Compile and Link
+
+$ gcc main.c	  -> a.out | a.exe
+
+
+
+Compiling files
+
+$ gcc -c main.c   -> main.o | main.obj
+
+Linking files
+
+$ gcc main.o      -> a.out | a.exe
+
+
+
+Linking external libraries
+
+$ gcc test.c -lm [<math.h>]
+$ gcc test.o -lm [<math.h>]
+
+
+
+
+Options
+
+$ gcc -Wall main.c 	   -> Enables all warnings
+$ gcc -E main.c	 	   -> Shows the preprocessor process
+$ gcc -S main.c	 	   -> Generates main.s (assembly code)
+$ gcc -save-temps main.c	   -> Saves all the files needed in the process of compilation
+$ gcc -g main.c		   -> Generates debugging information
+$ gcc -v main.c		   -> Show steps of compilation
+$ gcc -ansi main.c	   -> Enables c90 standard
+$ gcc -DMACRO_NAME	   -> Defines a MACRO by a parameter
+$ gcc main.c @opt_file	   -> Compiles with the parameters defined in the file (-Wall -ansi -g)
+$ gcc -Q --help=optimizers  -> Shows all the optimizations options
+
+
+
+Tools
+
+$ nm a.out		-> in second column ’T’ means that a function is defined 
+			   in second column ’U’ means that a function is undefined and should be resolved by the linker
+
+$ ldd a.out		-> Displays a list of the shared libraries needed  (Linux, Windows)
+$ otool -L a.out	         -> Displays a list of the shared libraries needed  (MAC)
+
+
+
+
+
+
+
+Interesting information
+
+About PATH, CPATH, LIBRARY_PATH:
+	
+	PATH: For searching executables and run-time shared libraries (.dll .so .dylib)
+	
+	CPATH:  For searching the include-paths for headers (<math.h> <stdlib.h>)
+			searched after paths specified in -l<dir> options
+			C_INCLUDE_PATH can be used to specify C headers if the particular language was indicated in pre-processing
+	
+	LIBRARY_PATH: For searching libraries-paths for link libraries
+				   it is searched after paths specified in -L<dir> options
+
+
+
+About auto linking libraries: 
+
+	The functions in stdlib.h and stdio.h have implementations in libc.so (or libc.a for static linking), which is linked into your executable by default (as if -lc were specified). GCC can be instructed to avoid this automatic link with the -nostdlib or -nodefaultlibs options.
+The math functions in math.h have implementations in libm.so (or libm.a for static linking), and libm is not linked in by default. There are historical reasons for this libm/libc split, none of them very convincing.
+Interestingly, the C++ runtime libstdc++ requires libm, so if you compile a C++ program with GCC (g++), you will automatically get libm linked in.
+
