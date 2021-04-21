@@ -24,14 +24,14 @@ $ gcc test.o -lm [<math.h>]
 
 Options
 
+$ gcc -g main.c		   -> Generates debugging information
 $ gcc -Wall main.c 	   -> Enables all warnings
+$ gcc -D MACRO_NAME	   -> Defines a MACRO by a parameter
+$ gcc -ansi main.c	   -> Enables c90 standard
 $ gcc -E main.c	 	   -> Shows the preprocessor process
 $ gcc -S main.c	 	   -> Generates main.s (assembly code)
-$ gcc -save-temps main.c	   -> Saves all the files needed in the process of compilation
-$ gcc -g main.c		   -> Generates debugging information
 $ gcc -v main.c		   -> Show steps of compilation
-$ gcc -ansi main.c	   -> Enables c90 standard
-$ gcc -DMACRO_NAME	   -> Defines a MACRO by a parameter
+$ gcc -save-temps main.c	   -> Saves all the files needed in the process of compilation
 $ gcc main.c @opt_file	   -> Compiles with the parameters defined in the file (-Wall -ansi -g)
 $ gcc -Q --help=optimizers  -> Shows all the optimizations options
 
@@ -39,16 +39,31 @@ $ gcc -Q --help=optimizers  -> Shows all the optimizations options
 
 Tools
 
+$ ulimit -c unlimited	-> Enables the generation of core dump files
+$ ldd a.out		-> Displays a list of the shared libraries needed  (Linux, Windows)
+$ otool -L a.out		-> Displays a list of the shared libraries needed  (MAC)
 $ nm a.out		-> in second column ’T’ means that a function is defined 
 			   in second column ’U’ means that a function is undefined and should be resolved by the linker
 
-$ ldd a.out		-> Displays a list of the shared libraries needed  (Linux, Windows)
-$ otool -L a.out	         -> Displays a list of the shared libraries needed  (MAC)
 
+Debugging with gdb or lldb
 
+$ gcc -g main.c
+$ gdb a.out
 
-
-
+(gdb) run 			-> runs the debug
+(gdb) list <line> | <r1,r2>	-> displays the 10 lines after the line (optional)
+(gdb) print <variable>   		-> prints the value of the variables 
+(gdb) quit			-> exits of gdb
+(Gdb) set var <var> = <value>	-> sets variable in runtime
+(Gdb) break <line>		-> sets breakpoint in <line>
+(Gdb) c | continue		-> continue to the next breakpoint
+(Gdb) s | step <numer>		-> goes to the next step
+(Gdb) n | next			-> goes to the next statement
+(Gdb) info locals		-> prints all the local variables
+(Gdb) info break			-> prints all the breakpoints
+(Gdb) clear <line>		-> delete the breakpoint in <line>
+(Gdb) help <command>		-> shows the commands available
 
 
 Interesting information
@@ -71,4 +86,6 @@ About auto linking libraries:
 	The functions in stdlib.h and stdio.h have implementations in libc.so (or libc.a for static linking), which is linked into your executable by default (as if -lc were specified). GCC can be instructed to avoid this automatic link with the -nostdlib or -nodefaultlibs options.
 The math functions in math.h have implementations in libm.so (or libm.a for static linking), and libm is not linked in by default. There are historical reasons for this libm/libc split, none of them very convincing.
 Interestingly, the C++ runtime libstdc++ requires libm, so if you compile a C++ program with GCC (g++), you will automatically get libm linked in.
+
+
 
