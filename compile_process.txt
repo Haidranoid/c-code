@@ -1,8 +1,8 @@
+-------------------------------------------------------------
+
 Compile and Link
 
 $ gcc main.c	  -> a.out | a.exe
-
-
 
 Compiling files
 
@@ -12,13 +12,10 @@ Linking files
 
 $ gcc main.o      -> a.out | a.exe
 
-
-
 Linking external libraries
 
 $ gcc test.c -lm [<math.h>]
 $ gcc test.o -lm [<math.h>]
-
 
 
 
@@ -34,8 +31,9 @@ $ gcc -v main.c		   -> Show steps of compilation
 $ gcc -save-temps main.c	   -> Saves all the files needed in the process of compilation
 $ gcc main.c @opt_file	   -> Compiles with the parameters defined in the file (-Wall -ansi -g)
 $ gcc -Q --help=optimizers  -> Shows all the optimizations options
+$ gcc -I <path>		   -> Includes the dir where the .h files are located
 
-
+-------------------------------------------------------------
 
 Tools
 
@@ -45,6 +43,7 @@ $ otool -L a.out		-> Displays a list of the shared libraries needed  (MAC)
 $ nm a.out		-> in second column ’T’ means that a function is defined 
 			   in second column ’U’ means that a function is undefined and should be resolved by the linker
 
+-------------------------------------------------------------
 
 Debugging with gdb or lldb
 
@@ -65,7 +64,75 @@ $ gdb a.out
 (Gdb) clear <line>		-> delete the breakpoint in <line>
 (Gdb) help <command>		-> shows the commands available
 
+-------------------------------------------------------------
+Creating static libraries [/usr/local/lib]
 
+$ mkdir my-lib
+$ cd my-lib
+$ mkdir headers sources
+$ touch headers/mylib.h -->
+
+	#ifndef MY_LIB_H
+	#define MY_LIB_H
+
+	void func(void);
+
+	#endif // MY_LIB_H
+
+
+$ touch sources/mylib.c -->
+
+	#include <stdio.h>
+	#include "../headers/mylib.h"
+
+	void func(void){
+  	  printf("func() called from static library");
+	}
+
+$ gcc   -c sources/mylib.c -o libmylib.o	-> Compiles the source file to lib[name].o 
+$ ar rcs libmylib.a libmylib.o		-> Generate the static library from the object file 
+$ ar -cvq libmylib.a libmylib.o		-> EQUAL TO INSTRUCTION ABOVE
+$ ar -t libmylib.a 			-> Displays the .o files in the library
+
+
+
+
+Including path for the .h files
+
+$ touch main.c
+
+	#include <stdio.h>
+	#include "mylib.h"
+ 
+  	int main() {
+  	    func();
+  	    return 0;
+  	}   
+
+$ gcc -I <path> -c main.c	 -o main.o	 -> Includes the <path> to the dir where the .h files are located
+					    and compiles the main.c to main.o (object file)
+$ gcc main.o <path>/libmylib.a		 -> Link the main.o and the library, this can be relative or full path
+$ gcc ./a.out
+
+
+Notes:
+	The compiler expects to find the libraries in certain directories
+	The compiler looks in a few special places such as /usr/lib/, /usr/local/lib for libraries
+
+	/usr/local/lib -> system directory
+
+	The compiler option -L<pathname> is used to tell the linker a list of other directories in which to search for libraries
+	If you put your archive somewhere else, like /my-lib (own directory)
+
+	/my-lib  -> my own directory
+
+	The name that follows the -l option needs to match part of the archive name (.a files must be in /usr/local/lib)
+	
+	If your archive is called libawasome.a, you can compile your program with the -lawesome switch
+
+
+
+-------------------------------------------------------------
 Interesting information
 
 About PATH, CPATH, LIBRARY_PATH:
