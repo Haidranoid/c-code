@@ -1,5 +1,5 @@
-#ifndef STRINGFUNCTIONS_H
-#define STRINGFUNCTIONS_H
+#ifndef STRING_FUNCTIONS_H
+#define STRING_FUNCTIONS_H
 
 /*
 find the frequency of characters in a string

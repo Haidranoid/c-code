@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "StringFunctions.h"
+#include "stringfunctions.h"
 
 int challenge_static_libraries() {
     char *str1 = {"Hello, "};
