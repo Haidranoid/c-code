@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include "../headers/stringfunctionsshared.h"
 
 int get_length(char *string) {
     int length = 0;

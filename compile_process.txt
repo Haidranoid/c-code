@@ -65,7 +65,7 @@ $ gdb a.out
 (Gdb) help <command>		-> shows the commands available
 
 -------------------------------------------------------------
-Creating static libraries [/usr/local/lib]
+Creating static libraries [/usr/local/lib] [.a]
 
 $ mkdir my-lib
 $ cd my-lib
@@ -90,14 +90,16 @@ $ touch sources/mylib.c -->
 	}
 
 $ gcc   -c sources/mylib.c -o libmylib.o	-> Compiles the source file to lib[name].o 
-$ ar rcs libmylib.a libmylib.o		-> Generate the static library from the object file 
-$ ar -cvq libmylib.a libmylib.o		-> EQUAL TO INSTRUCTION ABOVE
+
+$ ar rcs libmylib.a libmylib.o		-> Generate the static library from the object file
+$ ar -cvq libmylib.a libmylib.o		-> EQUAL TO INSTRUCTION ABOVE			  
+
 $ ar -t libmylib.a 			-> Displays the .o files in the library
 
 
 
 
-Including path for the .h files
+Including path for the .h libraries files
 
 $ touch main.c
 
@@ -112,7 +114,73 @@ $ touch main.c
 $ gcc -I <path> -c main.c	 -o main.o	 -> Includes the <path> to the dir where the .h files are located
 					    and compiles the main.c to main.o (object file)
 $ gcc main.o <path>/libmylib.a		 -> Link the main.o and the library, this can be relative or full path
-$ gcc ./a.out
+$ ./a.out
+
+
+
+
+
+Creating dynamic libraries [/usr/local/lib] [Linux (.so) - Windows (.dll) - Mac (.dylib)] 
+
+$ mkdir my-lib
+$ cd my-lib
+$ mkdir headers sources
+$ touch headers/mylib.h -->
+
+	#ifndef MY_LIB_H
+	#define MY_LIB_H
+
+	void func(void);
+
+	#endif // MY_LIB_H
+
+
+$ touch sources/mylib.c -->
+
+	#include <stdio.h>
+	#include "../headers/mylib.h"
+
+	void func(void){
+  	  printf("func() called from static library");
+	}
+
+$ gcc -g -fPIC sources/stringfunctionsshared.c -shared -o stringfunctionsshared.so	-> Compiles the source file to lib[name].so
+
+
+
+
+Including path for the .h libraries files
+
+$ touch main.c
+
+	#include <stdio.h>
+	#include "mylib.h"
+ 
+  	int main() {
+  	    func();
+  	    return 0;
+  	}   
+
+$ gcc -I <path> -c main.c	 -o main.o	 -> Includes the <path> to the dir where the .h files are located
+					    and compiles the main.c to main.o (object file)
+
+Windows [-l libmylib]
+$ gcc main.o -L <path> -l lib<library>	 -> Add the <path> where is the libmylib.so and then link the <library>
+$ cd my-lib
+$ export PATH=<path>:$PATH 
+
+
+Unix-Linux [-l mylib]
+$ gcc main.o -L <path> -l lib<library>	 	-> Add the <path> where is the libmylib.so and then link the <library>
+$ cd my-lib
+$ export LD_LIBRARY_PATH=<path>$LD_LIBRARY_PATH	-> Add the <path> available where the libmylib.so to LD_LIBRARY_PATH env
+
+
+
+$ ldd a.out				 -> Displays the .so needed by the executable
+$ ./a.out
+
+
 
 
 Notes:
@@ -131,6 +199,7 @@ Notes:
 	If your archive is called libawasome.a, you can compile your program with the -lawesome switch
 
 
+https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/UsingDynamicLibraries.html#:~:text=The%20standard%20locations%20for%20dynamic,LD_LIBRARY_PATH
 
 -------------------------------------------------------------
 Interesting information

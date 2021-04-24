@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "StringFunctionsShared.h"
+#include "stringfunctionsshared.h"
 
-int challenge_dynamic_libraries() {
+int main() {
     char *str1 = {"Hello, "};
     char *str2 = {"My name is eduardo"};
     char *str3 = {"Hi, Welcome! this is my house."};
