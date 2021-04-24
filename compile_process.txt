@@ -28,9 +28,9 @@ $ gcc -ansi main.c	   -> Enables c90 standard
 $ gcc -E main.c	 	   -> Shows the preprocessor process
 $ gcc -S main.c	 	   -> Generates main.s (assembly code)
 $ gcc -v main.c		   -> Show steps of compilation
-$ gcc -save-temps main.c	   -> Saves all the files needed in the process of compilation
+$ gcc -save-temps main.c   -> Saves all the files needed in the process of compilation
 $ gcc main.c @opt_file	   -> Compiles with the parameters defined in the file (-Wall -ansi -g)
-$ gcc -Q --help=optimizers  -> Shows all the optimizations options
+$ gcc -Q --help=optimizers -> Shows all the optimizations options
 $ gcc -I <path>		   -> Includes the dir where the .h files are located
 
 -------------------------------------------------------------
@@ -65,7 +65,14 @@ $ gdb a.out
 (Gdb) help <command>		-> shows the commands available
 
 -------------------------------------------------------------
-Creating static libraries [/usr/local/lib] [.a]
+Creating static libraries [.a]
+
+default directory to find headers and libraries
+
+Mac OS  	-> /usr/local/include /usr/local/lib
+Windows 	-> 
+Unix/Linux	-> /usr/include and /usr/lib 
+
 
 $ mkdir my-lib
 $ cd my-lib
@@ -93,13 +100,10 @@ $ gcc   -c sources/mylib.c -o libmylib.o	-> Compiles the source file to lib[name
 
 $ ar rcs libmylib.a libmylib.o		-> Generate the static library from the object file
 $ ar -cvq libmylib.a libmylib.o		-> EQUAL TO INSTRUCTION ABOVE			  
-
 $ ar -t libmylib.a 			-> Displays the .o files in the library
 
 
-
-
-Including path for the .h libraries files
+Create a file to test the library including the header mylib.h
 
 $ touch main.c
 
@@ -111,6 +115,19 @@ $ touch main.c
   	    return 0;
   	}   
 
+
+
+Including path for the .h libraries files
+
+Move the mylib.h file to default include directory and libmylib.a to default library directory 
+
+$ gcc -c main.c -o main.o
+$ gcc main.o -l mylib
+
+						OR
+
+Include the header file by flag and search the library with full or relative path
+
 $ gcc -I <path> -c main.c	 -o main.o	 -> Includes the <path> to the dir where the .h files are located
 					    and compiles the main.c to main.o (object file)
 $ gcc main.o <path>/libmylib.a		 -> Link the main.o and the library, this can be relative or full path
@@ -120,7 +137,7 @@ $ ./a.out
 
 
 
-Creating dynamic libraries [/usr/local/lib] [Linux (.so) - Windows (.dll) - Mac (.dylib)] 
+Creating dynamic libraries [.so .dll .dylib] 
 
 $ mkdir my-lib
 $ cd my-lib
@@ -144,12 +161,10 @@ $ touch sources/mylib.c -->
   	  printf("func() called from static library");
 	}
 
-$ gcc -g -fPIC sources/stringfunctionsshared.c -shared -o stringfunctionsshared.so	-> Compiles the source file to lib[name].so
+$ gcc -g -fPIC sources/mylib.c -shared -o libmylib.so	-> Compiles the source file to lib[name].so
 
 
-
-
-Including path for the .h libraries files
+Create a file to test the library including the header mylib.h
 
 $ touch main.c
 
@@ -161,19 +176,36 @@ $ touch main.c
   	    return 0;
   	}   
 
+
+Including path for the .h libraries filesCreate a file to test the library including the header mylib.h
+
+
+Move the mylib.h file to default include directory and libmylib.a to default library directory 
+
+$ gcc -c main.c -o main.o
+$ gcc main.o -l mylib
+
+						OR
+
+
 $ gcc -I <path> -c main.c	 -o main.o	 -> Includes the <path> to the dir where the .h files are located
 					    and compiles the main.c to main.o (object file)
 
 Windows [-l libmylib]
-$ gcc main.o -L <path> -l lib<library>	 -> Add the <path> where is the libmylib.so and then link the <library>
+$ gcc main.o -L <path> -l lib<library>	 -> Add the <path> absolute or relative where is the libmylib.so and then link the <library>
+
+##### YOU HAVE TO PLACE THE libmylib.so INTO A DEFAULT FOLDER, OR THIS WONT WORK, EVENT WITH THIS LINE
 $ cd my-lib
 $ export PATH=<path>:$PATH 
 
 
+
 Unix-Linux [-l mylib]
-$ gcc main.o -L <path> -l lib<library>	 	-> Add the <path> where is the libmylib.so and then link the <library>
+$ gcc main.o -L <path> -l <library>	 	-> Add the <path> absolute or relative where is the libmylib.so and then link the <library>
+
+##### YOU HAVE TO PLACE THE libmylib.so INTO A DEFAULT FOLDER, OR THIS WONT WORK, EVENT WITH THIS LINE
 $ cd my-lib
-$ export LD_LIBRARY_PATH=<path>$LD_LIBRARY_PATH	-> Add the <path> available where the libmylib.so to LD_LIBRARY_PATH env
+$ export LD_LIBRARY_PATH=<path>:$LD_LIBRARY_PATH	-> Add the <path> available where the libmylib.so to LD_LIBRARY_PATH env
 
 
 

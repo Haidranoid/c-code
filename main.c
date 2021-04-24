@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "stringfunctionsshared.h"
+#include "stringfunctions.h"
 
 int main() {
     char *str1 = {"Hello, "};
